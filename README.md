@@ -2,52 +2,126 @@
 
 A comprehensive full-stack Library Management System built with **Spring Boot** (Backend) and **React.js** (Frontend). This system provides complete functionality for managing books, members, borrowing transactions, fines, and notifications in a modern library environment.
 
+## 📑 Table of Contents
+- [🚀 Features](#-features)
+  - [Core Functionality](#core-functionality)
+  - [Technical Features](#technical-features)
+- [🏗️ Architecture](#️-architecture)
+  - [Backend (Spring Boot)](#backend-spring-boot)
+  - [Frontend (React.js)](#frontend-reactjs)
+  - [Database Schema](#database-schema)
+- [🛠️ Technology Stack](#️-technology-stack)
+- [📋 Prerequisites](#-prerequisites)
+- [🚀 Quick Start](#-quick-start)
+  - [1. Clone the Repository](#1-clone-the-repository)
+  - [2. Backend Setup](#2-backend-setup)
+  - [3. Frontend Setup](#3-frontend-setup)
+  - [4. Access the Application](#4-access-the-application)
+  - [5. Access API Documentation](#5-access-api-documentation)
+- [📊 API Documentation](#-api-documentation)
+  - [Interactive API Documentation (Swagger UI)](#interactive-api-documentation-swagger-ui)
+  - [API Endpoints Overview](#api-endpoints-overview)
+  - [Using the API](#using-the-api)
+- [🗄️ Database Configuration](#️-database-configuration)
+- [🔧 Configuration](#-configuration)
+- [🧪 Testing Strategy](#-testing-strategy)
+- [📦 Production Deployment](#-production-deployment)
+- [🔒 Security Considerations](#-security-considerations)
+- [📈 Performance Optimization](#-performance-optimization)
+- [🐛 Troubleshooting](#-troubleshooting)
+- [📚 Sample Data](#-sample-data)
+- [🤝 Contributing](#-contributing)
+- [📄 License](#-license)
+- [👥 Authors](#-authors)
+- [🙏 Acknowledgments](#-acknowledgments)
+- [📞 Support](#-support)
+- [🗺️ Roadmap](#️-roadmap)
+
 ## 🚀 Features
 
 ### Core Functionality
-- **Book Management**: Add, update, delete, and search books with availability tracking
-- **Member Management**: Register members, manage profiles, and track membership status
-- **Borrowing System**: Handle book borrowing and returns with due date tracking
-- **Overdue Management**: Automatic overdue detection with fine calculation
-- **Notification System**: Real-time notifications for borrowing confirmations and overdue notices
-- **Dashboard Analytics**: Comprehensive overview with statistics and system status
+- **Book Management**: Add, update, delete, and search books with availability tracking.
+- **Member Management**: Register members, manage profiles, and track membership status.
+- **Borrowing System**: Handle book borrowing and returns with due date tracking.
+- **Overdue Management**: Automatic overdue detection with fine calculation.
+- **Notification System**: Real-time notifications for borrowing confirmations and overdue notices.
+- **Dashboard Analytics**: Comprehensive overview with statistics and system status.
 
 ### Technical Features
-- **RESTful API**: Clean REST endpoints with proper HTTP status codes
-- **Real-time Updates**: Dynamic UI updates without page refresh
-- **Responsive Design**: Mobile-friendly interface using Tailwind CSS
-- **Error Handling**: Graceful error handling with user-friendly messages
-- **Health Monitoring**: Backend health checks and connection status
-- **Demo Mode**: Offline demo with sample data when backend is unavailable
+- **RESTful API**: Clean REST endpoints with proper HTTP status codes.
+- **Real-time Updates**: Dynamic UI updates without page refresh.
+- **Responsive Design**: Mobile-friendly interface using Tailwind CSS.
+- **Error Handling**: Graceful error handling with user-friendly messages.
+- **Health Monitoring**: Backend health checks and connection status.
+- **Demo Mode**: Offline demo with sample data when backend is unavailable.
 
 ## 🏗️ Architecture
 
 ### Backend (Spring Boot)
-\`\`\`
+```plaintext
 src/main/java/com/library/
 ├── entity/              # JPA Entities
 ├── repository/          # Data Access Layer
-├── service/            # Business Logic Layer
-├── controller/         # REST API Controllers
-├── config/             # Configuration Classes
+├── service/             # Business Logic Layer
+├── controller/          # REST API Controllers
+├── config/              # Configuration Classes
 └── LibraryManagementApplication.java
-\`\`\`
+```
 
 ### Frontend (React.js)
-\`\`\`
+```plaintext
 src/
-├── components/         # React Components
-├── services/          # API Service Layer
-├── App.tsx           # Main Application Component
-└── index.tsx         # Application Entry Point
-\`\`\`
+├── components/          # React Components
+├── services/            # API Service Layer
+├── App.tsx              # Main Application Component
+└── index.tsx            # Application Entry Point
+```
 
 ### Database Schema
-- **Books**: Book information and availability
-- **Members**: Member profiles and status
-- **Borrowing Transactions**: Borrowing history and status
-- **Fines**: Fine management and payment tracking
-- **Notifications**: System notifications and alerts
+- **Books**: Book information and availability.
+  - `bookId` (Primary Key): Unique identifier for each book.
+  - `title`: Title of the book.
+  - `author`: Author of the book.
+  - `genre`: Genre of the book.
+  - `isbn`: ISBN number of the book.
+  - `yearPublished`: Year the book was published.
+  - `availableCopies`: Number of copies available for borrowing.
+  - `totalCopies`: Total number of copies owned by the library.
+
+- **Members**: Member profiles and status.
+  - `memberId` (Primary Key): Unique identifier for each member.
+  - `name`: Full name of the member.
+  - `email`: Email address of the member.
+  - `phone`: Phone number of the member.
+  - `address`: Address of the member.
+  - `membershipStatus`: Current membership status (e.g., ACTIVE, SUSPENDED, EXPIRED).
+  - `registrationDate`: Date when the member registered.
+
+- **Borrowing Transactions**: Borrowing history and status.
+  - `transactionId` (Primary Key): Unique identifier for each transaction.
+  - `bookId` (Foreign Key): Reference to the borrowed book.
+  - `memberId` (Foreign Key): Reference to the borrowing member.
+  - `borrowDate`: Date when the book was borrowed.
+  - `dueDate`: Due date for returning the book.
+  - `returnDate`: Date when the book was returned.
+  - `status`: Current status of the transaction (e.g., BORROWED, RETURNED, OVERDUE).
+
+- **Fines**: Fine management and payment tracking.
+  - `fineId` (Primary Key): Unique identifier for each fine.
+  - `memberId` (Foreign Key): Reference to the fined member.
+  - `transactionId` (Foreign Key): Reference to the related borrowing transaction.
+  - `amount`: Amount of the fine.
+  - `status`: Status of the fine (e.g., PENDING, PAID, WAIVED).
+  - `transactionDate`: Date when the fine was issued.
+  - `reason`: Reason for the fine.
+
+- **Notifications**: System notifications and alerts.
+  - `notificationId` (Primary Key): Unique identifier for each notification.
+  - `memberId` (Foreign Key): Reference to the notified member.
+  - `message`: Notification message.
+  - `dateSent`: Date when the notification was sent.
+  - `type`: Type of notification (e.g., DUE_DATE_REMINDER, OVERDUE_NOTICE, FINE_NOTICE, GENERAL).
+  - `isRead`: Whether the notification has been read.
 
 ## 🛠️ Technology Stack
 
@@ -70,34 +144,34 @@ src/
 
 ## 📋 Prerequisites
 
-- **Java 17** or higher
-- **Node.js 16** or higher
-- **npm** or **yarn**
-- **Maven 3.6** or higher
-- **Git**
+- **Java 17** or higher.
+- **Node.js 16** or higher.
+- **npm** or **yarn**.
+- **Maven 3.6** or higher.
+- **Git**.
 
 ## 🚀 Quick Start
 
 ### 1. Clone the Repository
-\`\`\`bash
+```bash
 git clone https://github.com/your-username/library-management-system.git
 cd library-management-system
-\`\`\`
+```
 
 ### 2. Backend Setup
-\`\`\`bash
+```bash
 # Navigate to backend directory
 cd backend
 
 # Install dependencies and run
 mvn clean install
 mvn spring-boot:run
-\`\`\`
+```
 
-The backend will start on \`http://localhost:8080\`
+The backend will start on `http://localhost:8080`.
 
 ### 3. Frontend Setup
-\`\`\`bash
+```bash
 # Navigate to frontend directory (in a new terminal)
 cd frontend
 
@@ -106,38 +180,38 @@ npm install
 
 # Start development server
 npm start
-\`\`\`
+```
 
-The frontend will start on \`http://localhost:3000\`
+The frontend will start on `http://localhost:3000`.
 
 ### 4. Access the Application
-- **Frontend**: http://localhost:3000
-- **Backend API**: http://localhost:8080/api
-- **H2 Database Console**: http://localhost:8080/h2-console
-- **Health Check**: http://localhost:8080/api/health
+- **Frontend**: [http://localhost:3000](http://localhost:3000)
+- **Backend API**: [http://localhost:8080/api](http://localhost:8080/api)
+- **H2 Database Console**: [http://localhost:8080/h2-console](http://localhost:8080/h2-console)
+- **Health Check**: [http://localhost:8080/api/health](http://localhost:8080/api/health)
 
 ### 5. Access API Documentation
-- **Swagger UI**: http://localhost:8080/swagger-ui.html
-- **API Docs**: http://localhost:8080/api-docs
+- **Swagger UI**: [http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html)
+- **API Docs**: [http://localhost:8080/api-docs](http://localhost:8080/api-docs)
 
 The Swagger UI provides an interactive interface to:
-- Explore all available API endpoints
-- Test API calls directly from the browser
-- View request/response schemas and examples
-- Understand API authentication requirements
+- Explore all available API endpoints.
+- Test API calls directly from the browser.
+- View request/response schemas and examples.
+- Understand API authentication requirements.
 
 ## 📊 API Documentation
 
 ### Interactive API Documentation (Swagger UI)
 Once the backend is running, you can access the interactive API documentation at:
-- **Swagger UI**: http://localhost:8080/swagger-ui.html
-- **OpenAPI JSON**: http://localhost:8080/api-docs
-- **OpenAPI YAML**: http://localhost:8080/api-docs.yaml
+- **Swagger UI**: [http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html)
+- **OpenAPI JSON**: [http://localhost:8080/api-docs](http://localhost:8080/api-docs)
+- **OpenAPI YAML**: [http://localhost:8080/api-docs.yaml](http://localhost:8080/api-docs.yaml)
 
 ### API Endpoints Overview
 
 #### Books API
-\`\`\`
+```http
 GET    /api/books              # Get all books
 GET    /api/books/{id}         # Get book by ID
 POST   /api/books              # Create new book
@@ -145,10 +219,10 @@ PUT    /api/books/{id}         # Update book
 DELETE /api/books/{id}         # Delete book
 GET    /api/books/search       # Search books
 GET    /api/books/available    # Get available books
-\`\`\`
+```
 
 #### Members API
-\`\`\`
+```http
 GET    /api/members            # Get all members
 GET    /api/members/{id}       # Get member by ID
 POST   /api/members            # Create new member
@@ -156,22 +230,36 @@ PUT    /api/members/{id}       # Update member
 DELETE /api/members/{id}       # Delete member
 GET    /api/members/search     # Search members
 GET    /api/members/active     # Get active members
-\`\`\`
+```
 
 #### Borrowing API
-\`\`\`
+```http
 GET    /api/borrowing                    # Get all transactions
 POST   /api/borrowing/borrow            # Borrow a book
 POST   /api/borrowing/return/{id}       # Return a book
 GET    /api/borrowing/member/{id}       # Get member borrowings
 GET    /api/borrowing/overdue           # Get overdue transactions
-\`\`\`
+```
+
+#### Fines API
+```http
+GET    /api/fines                        # Get all fines
+GET    /api/fines/member/{id}            # Get fines for a specific member
+POST   /api/fines/pay/{id}               # Pay a fine
+```
+
+#### Notifications API
+```http
+GET    /api/notifications                # Get all notifications
+GET    /api/notifications/member/{id}    # Get notifications for a specific member
+POST   /api/notifications/mark-read/{id} # Mark a notification as read
+```
 
 #### Health API
-\`\`\`
+```http
 GET    /api/health             # Application health status
 GET    /api/health/database    # Database health status
-\`\`\`
+```
 
 ### API Features
 - **Interactive Testing**: Try out API endpoints directly from the Swagger UI
@@ -184,7 +272,7 @@ GET    /api/health/database    # Database health status
 ### Using the API
 
 #### Example: Create a New Book
-\`\`\`bash
+```bash
 curl -X POST "http://localhost:8080/api/books" \
   -H "Content-Type: application/json" \
   -d '{
@@ -196,39 +284,39 @@ curl -X POST "http://localhost:8080/api/books" \
     "availableCopies": 5,
     "totalCopies": 5
   }'
-\`\`\`
+```
 
 #### Example: Search Books
-\`\`\`bash
+```bash
 curl -X GET "http://localhost:8080/api/books/search?keyword=Harry%20Potter"
-\`\`\`
+```
 
 #### Example: Borrow a Book
-\`\`\`bash
+```bash
 curl -X POST "http://localhost:8080/api/borrowing/borrow?bookId=1&memberId=1"
-\`\`\`
+```
 
 ## 🗄️ Database Configuration
 
 ### Development (H2 In-Memory)
-\`\`\`properties
+```properties
 spring.datasource.url=jdbc:h2:mem:librarydb
 spring.datasource.username=sa
 spring.datasource.password=
-\`\`\`
+```
 
 ### Production (MySQL)
-\`\`\`properties
+```properties
 spring.datasource.url=jdbc:mysql://localhost:3306/library_db
 spring.datasource.username=your_username
 spring.datasource.password=your_password
 spring.jpa.database-platform=org.hibernate.dialect.MySQL8Dialect
-\`\`\`
+```
 
 ## 🔧 Configuration
 
-### Backend Configuration (\`application.properties\`)
-\`\`\`properties
+### Backend Configuration (`application.properties`)
+```properties
 # Server Configuration
 server.port=8080
 
@@ -242,13 +330,13 @@ spring.web.cors.allowed-methods=GET,POST,PUT,DELETE,OPTIONS
 
 # Logging
 logging.level.com.library=DEBUG
-\`\`\`
+```
 
 ### Frontend Configuration
-Create \`.env\` file in frontend directory:
-\`\`\`
+Create `.env` file in frontend directory:
+```
 REACT_APP_API_URL=http://localhost:8080/api
-\`\`\`
+```
 
 ## 🧪 Testing Strategy
 
@@ -287,46 +375,46 @@ This project follows Test-Driven Development principles:
 ### Running Tests
 
 #### All Tests
-\`\`\`bash
+```bash
 mvn test
-\`\`\`
+```
 
 #### Unit Tests Only
-\`\`\`bash
+```bash
 mvn test -Dtest="*Test"
-\`\`\`
+```
 
 #### Integration Tests Only
-\`\`\`bash
+```bash
 mvn test -Dtest="*IntegrationTest"
-\`\`\`
+```
 
 #### Specific Test Class
-\`\`\`bash
+```bash
 mvn test -Dtest="BookServiceTest"
-\`\`\`
+```
 
 #### Specific Test Method
-\`\`\`bash
+```bash
 mvn test -Dtest="BookServiceTest#shouldReturnAllBooksWhenBooksExist"
-\`\`\`
+```
 
 #### With Code Coverage
-\`\`\`bash
+```bash
 mvn clean test jacoco:report
-\`\`\`
+```
 
 #### Integration Tests Profile
-\`\`\`bash
+```bash
 mvn verify -Pintegration-tests
-\`\`\`
+```
 
 ### Code Coverage
 
 #### Generate Coverage Report
-\`\`\`bash
+```bash
 mvn clean test jacoco:report
-\`\`\`
+```
 
 #### View Coverage Report
 Open `target/site/jacoco/index.html` in your browser
@@ -350,18 +438,18 @@ Open `target/site/jacoco/index.html` in your browser
 - **test-mysql**: Profile for MySQL integration tests
 
 #### Test Properties
-\`\`\`properties
+```properties
 # src/test/resources/application-test.properties
 spring.datasource.url=jdbc:h2:mem:testdb
 spring.jpa.hibernate.ddl-auto=create-drop
 logging.level.com.library=WARN
 springdoc.swagger-ui.enabled=false
-\`\`\`
+```
 
 ### Test Examples
 
 #### Service Layer Test Example
-\`\`\`java
+```java
 @ExtendWith(MockitoExtension.class)
 class BookServiceTest {
     @Mock
@@ -384,10 +472,10 @@ class BookServiceTest {
         assertThat(result.get()).isEqualTo(testBook);
     }
 }
-\`\`\`
+```
 
 #### Controller Test Example
-\`\`\`java
+```java
 @WebMvcTest(BookController.class)
 class BookControllerTest {
     @Autowired
@@ -408,10 +496,10 @@ class BookControllerTest {
                 .andExpect(jsonPath("$", hasSize(1)));
     }
 }
-\`\`\`
+```
 
 #### Integration Test Example
-\`\`\`java
+```java
 @SpringBootTest
 @AutoConfigureTestDatabase
 @Transactional
@@ -433,12 +521,12 @@ class BookIntegrationTest {
                 .andExpect(jsonPath("$.title", is("Test Book")));
     }
 }
-\`\`\`
+```
 
 ### Test Data Management
 
 #### Test Data Builders
-\`\`\`java
+```java
 public class BookTestDataBuilder {
     public static BookTestDataBuilder aBook() {
         return new BookTestDataBuilder();
@@ -453,21 +541,21 @@ public class BookTestDataBuilder {
         return new Book(/* parameters */);
     }
 }
-\`\`\`
+```
 
 #### Usage Example
-\`\`\`java
+```java
 Book testBook = BookTestDataBuilder.aBook()
     .withTitle("Test Book")
     .withAuthor("Test Author")
     .withAvailableCopies(5)
     .build();
-\`\`\`
+```
 
 ### Continuous Integration
 
 #### GitHub Actions Workflow
-\`\`\`yaml
+```yaml
 name: Tests
 on: [push, pull_request]
 jobs:
@@ -481,7 +569,7 @@ jobs:
       - run: mvn clean test
       - run: mvn jacoco:report
       - uses: codecov/codecov-action@v3
-\`\`\`
+```
 
 ### Best Practices
 
@@ -510,73 +598,50 @@ jobs:
 - Test one concept per test method
 - Provide meaningful assertion messages
 
-### Performance Testing
-
-#### Load Testing with JMeter
-\`\`\`bash
-# Install JMeter
-wget https://jmeter.apache.org/download_jmeter.cgi
-
-# Run load tests
-jmeter -n -t load-test.jmx -l results.jtl
-\`\`\`
-
-#### Benchmark Testing
-\`\`\`java
-@BenchmarkMode(Mode.AverageTime)
-@OutputTimeUnit(TimeUnit.MILLISECONDS)
-public class BookServiceBenchmark {
-    @Benchmark
-    public void testBookSearch() {
-        bookService.searchBooks("keyword");
-    }
-}
-\`\`\`
-
 ## 🧪 Testing
 
 ### Backend Tests
-\`\`\`bash
+```bash
 cd backend
 mvn test
-\`\`\`
+```
 
 ### Frontend Tests
-\`\`\`bash
+```bash
 cd frontend
 npm test
-\`\`\`
+```
 
 ## 📦 Production Deployment
 
 ### Backend Deployment
-\`\`\`bash
+```bash
 # Build JAR file
 mvn clean package
 
 # Run production JAR
 java -jar target/library-management-system-0.0.1-SNAPSHOT.jar
-\`\`\`
+```
 
 ### Frontend Deployment
-\`\`\`bash
+```bash
 # Build for production
 npm run build
 
 # Serve static files (using serve)
 npx serve -s build -l 3000
-\`\`\`
+```
 
 ### Docker Deployment
-\`\`\`dockerfile
+```dockerfile
 # Backend Dockerfile
 FROM openjdk:17-jdk-slim
 COPY target/library-management-system-0.0.1-SNAPSHOT.jar app.jar
 EXPOSE 8080
 ENTRYPOINT ["java", "-jar", "/app.jar"]
-\`\`\`
+```
 
-\`\`\`dockerfile
+```dockerfile
 # Frontend Dockerfile
 FROM node:16-alpine
 WORKDIR /app
@@ -586,10 +651,10 @@ COPY . .
 RUN npm run build
 EXPOSE 3000
 CMD ["npx", "serve", "-s", "build", "-l", "3000"]
-\`\`\`
+```
 
 ### Docker Compose
-\`\`\`yaml
+```yaml
 version: '3.8'
 services:
   backend:
@@ -607,7 +672,7 @@ services:
       - backend
     environment:
       - REACT_APP_API_URL=http://localhost:8080/api
-\`\`\`
+```
 
 ## 🔒 Security Considerations
 
@@ -622,13 +687,13 @@ services:
 - [ ] Regular security updates
 
 ### Recommended Security Enhancements
-\`\`\`java
+```java
 // Add Spring Security dependency
 <dependency>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-security</artifactId>
 </dependency>
-\`\`\`
+```
 
 ## 📈 Performance Optimization
 
@@ -651,7 +716,7 @@ services:
 ### Common Issues
 
 #### Backend Not Starting
-\`\`\`bash
+```bash
 # Check Java version
 java -version
 
@@ -660,25 +725,25 @@ netstat -an | grep 8080
 
 # Check application logs
 tail -f logs/application.log
-\`\`\`
+```
 
 #### Frontend Connection Issues
-\`\`\`bash
+```bash
 # Check backend health
 curl http://localhost:8080/api/health
 
 # Check CORS configuration
 # Verify REACT_APP_API_URL in .env file
-\`\`\`
+```
 
 #### Database Issues
-\`\`\`bash
+```bash
 # Access H2 Console
 # URL: http://localhost:8080/h2-console
 # JDBC URL: jdbc:h2:mem:librarydb
 # Username: sa
 # Password: (empty)
-\`\`\`
+```
 
 ## 📚 Sample Data
 
@@ -692,9 +757,9 @@ The application includes sample data initialization:
 ## 🤝 Contributing
 
 1. Fork the repository
-2. Create a feature branch (\`git checkout -b feature/amazing-feature\`)
-3. Commit your changes (\`git commit -m 'Add amazing feature'\`)
-4. Push to the branch (\`git push origin feature/amazing-feature\`)
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
 
 ### Development Guidelines
