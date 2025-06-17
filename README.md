@@ -775,7 +775,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 👥 Authors
 
-- **Your Name** - *Initial work* - [YourGitHub](https://github.com/yourusername)
+- **NEHAL MR** - [GitHub](https://github.com/nehalmr)
 
 ## 🙏 Acknowledgments
 
@@ -789,8 +789,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 For support and questions:
 - **Email**: support@librarymanagement.com
-- **Issues**: [GitHub Issues](https://github.com/your-username/library-management-system/issues)
-- **Documentation**: [Wiki](https://github.com/your-username/library-management-system/wiki)
+- **Issues**: [GitHub Issues](https://github.com/nehalmr/lms-monolithic/issues)
+- **Documentation**: [Wiki](https://github.com/nehalmr/lms-monolithic/wiki)
 
 ## 🗺️ Roadmap
 
